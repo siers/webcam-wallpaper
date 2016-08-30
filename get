@@ -1,7 +1,7 @@
 #!/usr/bin/expect
 
 set timeout 30
-spawn mpv https://edge01.balticlivecam.com/blc/RadissonDaugava/index.m3u8
+spawn mpv https://edge01.balticlivecam.com/blc/RadissonDaugava/index.m3u8 -vo null
 
 expect {
     "00:00:01" {}
