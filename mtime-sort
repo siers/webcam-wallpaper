@@ -1,0 +1,53 @@
+#!/usr/bin/env ruby
+
+require 'open3'
+
+class Array
+  def split(value = nil)
+    if block_given?
+      inject([[]]) do |results, element|
+        if yield(element)
+          results << []
+        else
+          results.last << element
+        end
+
+        results
+      end
+    else
+      results, arr = [[]], self.dup
+      until arr.empty?
+        if (idx = arr.index(value))
+          results.last.concat(arr.shift(idx))
+          arr.shift
+          results << []
+        else
+          results.last.concat(arr.shift(arr.size))
+        end
+      end
+      results
+    end
+  end
+end
+
+if ARGV.empty?
+  puts "usage: ./mtime-sort <directories> [, -r]"
+  exit
+end
+
+# find . your-options -printf "%T+\t%p\n" | sort
+
+files, cmds = ARGV.split(',')
+cmd = %w{find} + files + %w{-type f -printf %T+\0%p\n}
+out = Open3.popen3(*cmd) { |_, out| out.read }.to_s.each_line.to_a.sort.map do |fn|
+  fn.split("\x00")[1]
+end
+
+cmds && cmds.index('-r') && out.reverse!
+
+# if (digit = cmds.grep(/^\d+$/)[0])
+#   out = out[0..digit.to_i]
+# end
+
+
+puts out

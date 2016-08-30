@@ -1,0 +1,17 @@
+#!/usr/bin/expect
+
+set timeout 30
+spawn mpv https://edge01.balticlivecam.com/blc/RadissonDaugava/index.m3u8
+
+expect {
+    "00:00:01" {}
+    "00:00:02" {}
+    "00:00:03" {}
+    "00:00:04" {}
+    "00:00:05" {}
+}
+
+sleep 1
+send "s"
+sleep 1
+send "q"
