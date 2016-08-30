@@ -1,0 +1,10 @@
+- webcam-wallpaper
+    This downloads a picture from a webcam in the city I live in to put on my
+    desktop. Now I can set this as a cronjob and enjoy the «current» view of
+    the city without going too far from desk. Lovely.
+
+    expect 'spawn mpv balticlivecam.com/RadissonDaugava.m3u8'
+        ->
+    mtime-sort | sed '1,5d' | xargs -r rm
+        ->
+    mtime-sort | tail -n1 | xargs feg --bg-center
