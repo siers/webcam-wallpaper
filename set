@@ -4,5 +4,5 @@ cd shots
 ../get
 cd ..
 
-./mtime-sort shots , -r | sed '1,5d' | xargs -r rm
-feh --bg-scale "$(./mtime-sort shots , -r | head -n1)"
+./mtime-sort shots | tac | sed '1,5d' | xargs -r rm
+feh --bg-scale "$(./mtime-sort shots | tail -n1)"
